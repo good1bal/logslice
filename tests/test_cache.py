@@ -55,6 +55,13 @@ def test_save_and_load_roundtrip(sample_log):
     assert entry.index == index
 
 
+def test_save_cache_creates_cache_dir_if_missing(sample_log, tmp_cache_dir):
+    """save_cache should create the cache directory when it does not exist yet."""
+    assert not tmp_cache_dir.exists()
+    save_cache(sample_log, [])
+    assert tmp_cache_dir.exists()
+
+
 def test_load_cache_stale_after_modification(sample_log):
     save_cache(sample_log, [[0, "2024-01-01T00:00:00"]])
     # Modify file content to change mtime
